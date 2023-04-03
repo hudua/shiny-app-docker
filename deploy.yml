@@ -1,1 +1,27 @@
+trigger: none
 
+stages:
+- stage: RShinyAppDeploy
+  jobs:
+  - job: BuildContainer
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+    - script: |
+        docker build . --file Dockerfile --tag my-r-shiny-app:latest
+        docker tag my-r-shiny-app:latest azuremlhuduaa31f772f.azurecr.io/my-r-shiny-app:latest
+        az login --service-principal -u ${{ secrets.APPID }} -p ${{ secrets.SECRET }} --tenant ${{ secrets.TENANTID }}
+        az acr login -n azuremlhuduaa31f772f
+        docker push azuremlhuduaa31f772f.azurecr.io/my-r-shiny-app:latest
+      displayName: 'Build the Docker image and Push to ACR'
+  - job: DeployApp
+    dependsOn: BuildContainer
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - script: |
+        az login --service-principal -u ${{ secrets.APPID }} -p ${{ secrets.SECRET }} --tenant ${{ secrets.TENANTID }}
+        az webapp config set --resource-group r-shiny-app --name r-shiny-app-hudua-cd --linux-fx-version "DOCKER|azuremlhuduaa31f772f.azurecr.io/my-r-shiny-app:latest"          
+        az webapp restart --name r-shiny-app-hudua-cd --resource-group r-shiny-app
+      displayName: 'Run app in App Service from ACR'
