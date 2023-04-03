@@ -22,6 +22,6 @@ stages:
     steps:
     - script: |
         az login --service-principal -u $(APPID) -p $(SECRET) --tenant $(TENANTID)
-        az webapp config set --resource-group r-shiny-app --name r-shiny-app-hudua-cd --linux-fx-version "DOCKER|acrhuduatranslink.azurecr.io/my-r-shiny-app:latest"          
-        az webapp restart --name r-shiny-app-hudua-cd --resource-group r-shiny-app
+        az webapp config set --resource-group phac --name phachuduarshinyapp --linux-fx-version "DOCKER|acrhuduatranslink.azurecr.io/my-r-shiny-app:latest"          
+        az webapp restart --name phachuduarshinyapp --resource-group phac
       displayName: 'Run app in App Service from ACR'
