@@ -15,13 +15,13 @@ data_df <- readRDS("data-df.rds")
 ui <- fluidPage(
     
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("Old Faithful Geyser Dataset"),
     
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
             sliderInput("bins",
-                        "Number of bins:",
+                        "Number of bins (between 1 and 50)",
                         min = 1,
                         max = 50,
                         value = 30)
@@ -38,7 +38,7 @@ ui <- fluidPage(
             pre(
                 textOutput("installed_pkgs")
             ),
-            h2("Table of hats"),
+            h2("Table of hats below"),
             dataTableOutput("hat_table")
         )
     )
