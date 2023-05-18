@@ -22,6 +22,6 @@ stages:
     steps:
     - script: |
         az login --service-principal -u $(APPID) -p $(SECRET) --tenant $(TENANTID)
-        az webapp config set --resource-group sc-cac-dev-health-rg --name sc-cac-dev-health-nphs-wa --linux-fx-version "DOCKER|sccacdevhealthcr.azurecr.io/my-r-shiny-app:latest"          
-        az webapp restart --name sc-cac-dev-health-nphs-wa --resource-group sc-cac-dev-health-rg
+        az webapp config set --resource-group sc-cac-dev-health-rg --name sc-cac-dev-health-nphs-app --linux-fx-version "DOCKER|sccacdevhealthcr.azurecr.io/my-r-shiny-app:latest"          
+        az webapp restart --name sc-cac-dev-health-nphs-app --resource-group sc-cac-dev-health-rg
       displayName: 'Run app in App Service from ACR'
