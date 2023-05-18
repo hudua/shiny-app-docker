@@ -30,7 +30,7 @@ ui <- fluidPage(
         # Show a plot of the generated distribution
         mainPanel(
             plotOutput("distPlot"),
-            h2("Table of hats below"),
+            h2("Statistics (NPHS) Sample Table below"),
             dataTableOutput("hat_table")
         )
     )
