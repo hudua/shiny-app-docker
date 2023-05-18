@@ -30,14 +30,6 @@ ui <- fluidPage(
         # Show a plot of the generated distribution
         mainPanel(
             plotOutput("distPlot"),
-            h2("sessionInfo"),
-            pre(
-                textOutput("mysessioninfo")
-            ),
-            h2("Installed packages"),
-            pre(
-                textOutput("installed_pkgs")
-            ),
             h2("Table of hats below"),
             dataTableOutput("hat_table")
         )
@@ -53,7 +45,7 @@ server <- function(input, output) {
         bins <- seq(min(x), max(x), length.out = input$bins + 1)
         
         # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+        hist(x, breaks = bins, col = 'darkgray', border = 'white', xlab = 'Age when first experienced brain fog.')
     })
     output$mysessioninfo <- renderPrint({sessionInfo()})
     output$installed_pkgs <- renderPrint({names(installed.packages()[,"Package"])})
