@@ -15,7 +15,7 @@ data_df <- readRDS("data-df.rds")
 ui <- fluidPage(
     
     # Application title
-    titlePanel("Old Faithful Geyser Dataset April 5, 2023"),
+    titlePanel("National Population Health Survey Findings - May 17, 2023"),
     
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
