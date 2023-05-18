@@ -10,10 +10,10 @@ stages:
     steps:
     - script: |
         docker build . --file Dockerfile --tag my-r-shiny-app:latest
-        docker tag my-r-shiny-app:latest acrhuduatranslink.azurecr.io/my-r-shiny-app:latest
+        docker tag my-r-shiny-app:latest sccacdevhealthcr.azurecr.io/my-r-shiny-app:latest
         az login --service-principal -u $(APPID) -p $(SECRET) --tenant $(TENANTID)
-        az acr login -n acrhuduatranslink
-        docker push acrhuduatranslink.azurecr.io/my-r-shiny-app:latest
+        az acr login -n sccacdevhealthcr
+        docker push sccacdevhealthcr.azurecr.io/my-r-shiny-app:latest
       displayName: 'Build the Docker image and Push to ACR'
   - job: DeployApp
     dependsOn: BuildContainer
@@ -22,6 +22,6 @@ stages:
     steps:
     - script: |
         az login --service-principal -u $(APPID) -p $(SECRET) --tenant $(TENANTID)
-        az webapp config set --resource-group phac --name phachuduarshinyapp --linux-fx-version "DOCKER|acrhuduatranslink.azurecr.io/my-r-shiny-app:latest"          
-        az webapp restart --name phachuduarshinyapp --resource-group phac
+        az webapp config set --resource-group sc-cac-dev-health-rg --name sc-cac-dev-health-nphs-wa --linux-fx-version "DOCKER|sccacdevhealthcr.azurecr.io/my-r-shiny-app:latest"          
+        az webapp restart --name sc-cac-dev-health-nphs-wa --resource-group sc-cac-dev-health-rg
       displayName: 'Run app in App Service from ACR'
